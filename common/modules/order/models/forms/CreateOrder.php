@@ -25,7 +25,7 @@ class CreateOrder extends Model
 	{
 		return [
 			[['author_phone'],'required','message' => 'Введите номер'],
-			[['content'],'required','message' => 'Опишите ваш запрос'],
+			[['content'],'required','message' => 'Опишите ваш заказ'],
 			[['category_id'],'required','message' => 'Выберите категорию'],
 			[['author_id','category_id','status'],'integer'],
 			[['author_name','author_phone'],'string','max' => 255,'message' => 'Превышено максимальное колличество символов'],

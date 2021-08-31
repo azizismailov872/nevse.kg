@@ -26,91 +26,65 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 	<div class="wrap">
-		<?= $this->render('header');?>
-		<section class="main-category" style="background-image: url(<?= Yii::$app->params['defaultCategoryBg'];?>);">
-			<div class="row align-items-center">
-				<div class="col-12">
-					<h2><a href="<?= Url::toRoute([Yii::$app->params['categoryUrl']]);?>" class="category-title"><?= Yii::$app->params['categoryTitle'];?></a></h2>
-					<?php if(Yii::$app->params['categorySubTitle'] !== null):?>
-						<h3 class="category-sub-title text-center"><?= Yii::$app->params['categorySubTitle'];?></h3>
-					<?php endif;?>
-				</div>
+		<?= $this->render('header') ?>
+		<section class="category" style="background-image: url(<?= Yii::$app->params['defaultCategoryBg'];?>);">
+			<div class="container d-flex justify-content-center align-tiems-center">
+				<?= $this->render('@common/modules/order/views/frontend-order/form/form')?>
 			</div>
 		</section>
 		<section class="main">
 			<div class="sidebar-wrap"></div>
 			<div class="container">
-			<?php Pjax::begin(['id' => 'alerts']);?>
-				<?php if( Yii::$app->session->hasFlash('success') ): ?>
+				<?= $this->render('flash') ?>
 				<div class="row">
-					<div class="col-12">
-						<div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<?php echo Yii::$app->session->getFlash('success'); ?>
-						</div>
-					</div>
-				</div>
-				<?php endif;?>
-				<?php if( Yii::$app->session->hasFlash('error') ):?>
-					<div class="row">
-						<div class="col-12">
-							<div class="alert alert-success alert-dismissible" role="alert" id="error-alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<?php echo Yii::$app->session->getFlash('error'); ?>
-							</div>
-						</div>
-					</div>
-				<?php endif;?>
-			<?php Pjax::end();?>
-				<div class="row">
-					<div class="col-lg-4">
-						<?= $this->render('sidebar');?>
-					</div>
-					<div class="col-lg-8">
-					   <?= $content;?>
-					</div>
-				</div>
+                    <div class="col-lg-4">
+                        <?= $this->render('sidebar');?>
+                    </div>
+                    <div class="col-lg-8">
+                       <?= $content;?>
+                    </div>
+                </div>
 			</div>
 		</section>
 	</div>
 	<div class="up-to-top" id="up-to-top"></div>
-	<script>
-	var url = 'https://wati-integration-service.clare.ai/ShopifyWidget/shopifyWidget.js?36989';
-	var s = document.createElement('script');
-	s.type = 'text/javascript';
-	s.async = true;
-	s.src = url;
-	var options = {
-  "enabled":true,
-  "chatButtonSetting":{
-	  "backgroundColor":"#4dc247",
-	  "ctaText":"",
-	  "borderRadius":"25",
-	  "marginLeft":"0",
-	  "marginBottom":"10",
-	  "marginRight":"15",
-	  "position":"right"
-  },
-  "brandSetting":{
-	  "brandName":"VSE.KG",
-	  "brandSubTitle":"Напишите нам !",
-	  "brandImg":"https://cdn.icon-icons.com/icons2/2037/PNG/512/media_social_whatsapp_icon_124250.png",
-	  "welcomeText":"Здравствуйте, чем можем вам помочь?",
-	  "messageText":"Здравствуйте, я с сайта nevse.kg",
-	  "backgroundColor":"#0a5f54",
-	  "ctaText":"Отправить",
-	  "borderRadius":"25",
-	  "autoShow":false,
-	  "phoneNumber":"996708903088"
-  }
-};
-	s.onload = function() {
-		CreateWhatsappChatWidget(options);
-	};
-	var x = document.getElementsByTagName('script')[0];
-	x.parentNode.insertBefore(s, x);
-</script>
 <?php $this->endBody() ?>
 </body>
+<script>
+    var url = 'https://wati-integration-service.clare.ai/ShopifyWidget/shopifyWidget.js?36989';
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = url;
+    var options = {
+	  		"enabled":true,
+	  		"chatButtonSetting":{
+	      	"backgroundColor":"#4dc247",
+	      	"ctaText":"",
+	      	"borderRadius":"25",
+	      	"marginLeft":"0",
+	      	"marginBottom":"10",
+	      	"marginRight":"15",
+	      	"position":"right"
+	  	},
+	  	"brandSetting":{
+	    	"brandName":"VSE.KG",
+	    	"brandSubTitle":"Напишите нам !",
+	    	"brandImg":"https://cdn.icon-icons.com/icons2/2037/PNG/512/media_social_whatsapp_icon_124250.png",
+	      	"welcomeText":"Здравствуйте, чем можем вам помочь?",
+	      	"messageText":"Здравствуйте, я с сайта nevse.kg",
+	     	"backgroundColor":"#0a5f54",
+	      	"ctaText":"Отправить",
+	      	"borderRadius":"25",
+	      	"autoShow":false,
+	      	"phoneNumber":"996708903088"
+	  	}
+	};
+    s.onload = function() {
+        CreateWhatsappChatWidget(options);
+    };
+    var x = document.getElementsByTagName('script')[0];
+    x.parentNode.insertBefore(s, x);
+</script>
 </html>
 <?php $this->endPage() ?>

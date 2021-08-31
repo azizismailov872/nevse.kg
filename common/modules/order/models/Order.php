@@ -40,7 +40,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content'], 'required','message' => 'Опишите ваш запрос'],
+            [['content'], 'required','message' => 'Опишите ваш заказ'],
             [['category_id'],'required','message' => 'Выберите категорию'],
             [['author_phone'],'required','message' => 'Введите номер'],
             [['author_id', 'category_id', 'status', 'created_at', 'updated_at'], 'integer'],
