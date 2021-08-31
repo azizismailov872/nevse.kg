@@ -1,11 +1,19 @@
 <?php 
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-
+$model = $this->params['model'];
+$phoneValue = $this->params['phoneValue'];
+$categoriesList = $this->params['categoriesList'];
+$categoryTitle = (Yii::$app->params['categoryTitle'] !== 'Все категории') ? Yii::$app->params['categoryTitle'] : null;
+$categoryId = (isset($this->params['categoryId']) && !empty($this->params['categoryId'])) ? $this->params['categoryId'] : null;
 ?>
 <div class="guest__content">
     <h1 class="guest__title">
-        Выполним ваш заказ <br>Все услуги на одном сайте
+        <?php if($categoryTitle !== null) :?>
+        	<?= $categoryTitle ?>
+        <?php else: ?>
+			Выполним ваш заказ <br>Все услуги на одном сайте
+        <?php endif; ?>
     </h1>
     <div class="guest__form-container">
     	<?php $form = ActiveForm::begin([
@@ -51,28 +59,56 @@ use yii\helpers\Url;
 			                    <h3 class="new-order-header">Укажите информацию</h3>
 			                </div>
 			                <div class="col-12">
-			                    <p class="new-order-text">Выберите категорию и введите номер телефона для связи</p>
+			                	<?php if(isset($categoryId) && !empty($categoryId)):?>
+			                    	<p class="new-order-text mb-2">Укажите номер телефона, чтобы создать заказ</p>
+			                    <?php else: ?>
+			                    	<p class="new-order-text">Выберите категорию и введите номер телефона для связи</p>
+			                    <?php endif;?>
 			                </div>
 			            </div>
-			            <?= $form->field($model,'category_id',[
-						    'template' => '
-						        <div class="col-12">
-						             {error}
-						        </div>
-						        <div class="col-12 pr-lg-2 mb-lg-3 mb-md-2">
-						            {input}
-						        </div>
-						    ',
-						    'options' => [
-						        'tag' => 'div',
-						        'class' => 'row justify-content-end',
-						    ],
-						    'errorOptions' => [
-						        'tag' => 'span',
-						        'class' => 'error-message'
-						    ],
-						    'validateOnChange' => true,
-						])->dropDownList($categoriesList,['class' => 'order-form-select custom-select','prompt' => 'Выберите категорию']);?>
+			            <?php if(isset($categoryId) && !empty($categoryId)) :?>
+				            <?= $form->field($model,'category_id',[
+								    'template' => '
+								        <div class="col-12">
+								             {error}
+								        </div>
+								        <div class="col-12 pr-lg-2 mb-lg-3 mb-md-2">
+								            {input}
+								        </div>
+								    ',
+								    'options' => [
+								        'tag' => 'div',
+								        'class' => 'row justify-content-end',
+								    ],
+								    'errorOptions' => [
+								        'tag' => 'span',
+								        'class' => 'error-message'
+								    ],
+								    'validateOnChange' => true,
+								])->hiddenInput(['value' => $categoryId])->label(false);
+							?>
+						<?php else: ?>
+							<?= $form->field($model,'category_id',[
+								    'template' => '
+								        <div class="col-12">
+								             {error}
+								        </div>
+								        <div class="col-12 pr-lg-2 mb-lg-3 mb-md-2">
+								            {input}
+								        </div>
+								    ',
+								    'options' => [
+								        'tag' => 'div',
+								        'class' => 'row justify-content-end',
+								    ],
+								    'errorOptions' => [
+								        'tag' => 'span',
+								        'class' => 'error-message'
+								    ],
+								    'validateOnChange' => true,
+								])->dropDownList($categoriesList,['class' => 'order-form-select custom-select','prompt' => 'Выберите категорию']);
+							?>
+						<?php endif;?>
 			            <?= $form->field($model,'author_phone',[
 			                'template' => '
 			                    <div class="col-12">
@@ -86,7 +122,7 @@ use yii\helpers\Url;
 			                        </div>
 			                    </div>
 			                    <div class="col-12">
-			                        <button class="button green full new-order-btn" id="create-order-btn" type="submit">Создать запрос</button>
+			                        <button class="button green full new-order-btn" id="create-order-btn" type="submit">Создать заказ</button>
 			                    </div>
 			                ',
 			                'options' => [

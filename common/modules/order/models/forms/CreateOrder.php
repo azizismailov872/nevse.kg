@@ -58,8 +58,9 @@ class CreateOrder extends Model
 		$swearWords = Yii::$app->params['swearWords'];
 
 		foreach($swearWords as $swear)
-		{
-			if(preg_match('/'.$swear.'/ui',$this->$attribute))
+		{	
+
+			if(preg_match('/\b'.$swear.'\b/ui',$this->$attribute))
 			{
 				$this->addError($attribute,'Нецензурные выражения запрещены');
 			}

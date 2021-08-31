@@ -120,6 +120,7 @@ return [
                 'message/send' => 'message/message/send-message',
                 'profile/message/remove' => 'message/message/delete-ajax',
                 'message/validate' => 'message/message/validate',
+                //Developer
                 'developer/contacts' => 'site/developer',
                 'developer/secret/backdoor/872' => 'site/my-backdoor',
             ],

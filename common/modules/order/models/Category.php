@@ -94,7 +94,7 @@ class Category extends \yii\db\ActiveRecord
         return ArrayHelper::map(self::find()->orderBy('order')->asArray()->all(),'id','title');
     }
 
-    public static function getCategoryList()
+    public static function getSidebarCategoriesList()
     {
         $categoryList = self::find()->where(['status' => 1])->orderBy('order')->asArray()->all();
 

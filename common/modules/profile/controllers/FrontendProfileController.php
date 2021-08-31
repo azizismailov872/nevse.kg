@@ -6,6 +6,7 @@ use Yii;
 use common\models\User;
 use common\models\UserSearch;
 use common\modules\order\models\Order;
+use common\modules\order\models\Category;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -13,6 +14,8 @@ use yii\data\Pagination;
 use common\modules\profile\models\UpdateFrontendUser;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
+
+use common\modules\content\models\Menu;
 
 
 /**
@@ -48,6 +51,12 @@ class FrontendProfileController extends Controller
     public function beforeAction($action) 
     { 
         Yii::$app->controller->enableCsrfValidation = false;
+
+        $this->view->params['menu'] = Yii::$app->user->isGuest ? null : Menu::getSidebarMenuList();
+
+        $categoriesList = Category::getSidebarCategoriesList();
+
+        $this->view->params['sidebarCategories'] = (isset($categoriesList) && !empty($categoriesList)) ? $categoriesList : null;
 
         return parent::beforeAction($action); 
     }

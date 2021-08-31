@@ -3,20 +3,25 @@
 namespace common\modules\order\controllers;
 
 use Yii;
+//User
 use common\models\User;
-use common\modules\message\models\forms\WriteMessage;
-use common\modules\order\models\Category;
+//Tools
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\widgets\ActiveForm;
+use yii\data\Pagination;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+// Models
 use common\modules\order\models\Order;
 use common\modules\order\models\PaidOrders;
 use common\modules\order\models\forms\CreateOrder;
 use common\modules\order\models\forms\EditOrder;
-use common\modules\order\models\search\OrderSearch;
-use yii\data\Pagination;
-use yii\filters\AccessControl;
-use yii\helpers\Url;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\widgets\ActiveForm;
+
+use common\modules\message\models\forms\WriteMessage;
+use common\modules\order\models\Category;
+use common\modules\content\models\Menu;
+
 
 /**
  * FrontendOrderController implements the CRUD actions for Order model.
@@ -61,27 +66,26 @@ class FrontendOrderController extends Controller
     { 
         Yii::$app->controller->enableCsrfValidation = false;
 
+        $this->view->params['menu'] = Yii::$app->user->isGuest ? null : Menu::getSidebarMenuList();
+
+        $categoriesList = Category::getSidebarCategoriesList();
+
+        $this->view->params['sidebarCategories'] = (isset($categoriesList) && !empty($categoriesList)) ? $categoriesList : null;
+
         return parent::beforeAction($action); 
         
     }
 
-    /**
-     * Lists all Order models.
-     * @return mixed
-     */
     public function actionIndex()
-    {    
+    {   
 
-        if(Yii::$app->user->isGuest)
-        {
-            $this->layout = 'guest';
-        }
+        $this->view->title = 'VSЁ';
 
-        $view = Yii::$app->user->isGuest ? 'guest' : 'index';
+        $this->view->params['model'] = new CreateOrder();
 
-        $model = new CreateOrder();
+        $this->view->params['categoriesList'] = Category::getCategoriesList();
 
-        $categoriesList = Category::getCategoriesList();
+        $this->view->params['phoneValue'] = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
 
         $query = Order::find();
 
@@ -97,30 +101,20 @@ class FrontendOrderController extends Controller
         ])
         ->all();
 
-        $this->view->title = 'VSЁ';
-
-        $phoneValue = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
-
-        if(Yii::$app->user->isGuest)
-        {
-            $this->view->params['model'] = $model;
-            $this->view->params['categoriesList'] = $categoriesList;
-            $this->view->params['phoneValue'] = $phoneValue;
-        }
-        
-        return $this->render($view, [
-            'model' => $model,
-            'pagination' => $pagination,
+        return $this->render('main',[
             'orders' => $orders,
-            'categoriesList' => $categoriesList,
-            'phoneValue' => $phoneValue,
+            'pagination' => $pagination,
         ]);
     }
 
     public function actionCategory($url)
     {   
+        
+        $this->view->params['model'] = new CreateOrder();
 
-        $model = new CreateOrder();
+        $this->view->params['categoriesList'] = Category::getCategoriesList();
+
+        $this->view->params['phoneValue'] = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
 
         $category = Category::find()->where(['url' => $url])->one();
 
@@ -144,19 +138,40 @@ class FrontendOrderController extends Controller
         
         Yii::$app->params['categoryUrl'] = '/category/'.$category->url;
 
-        Yii::$app->params['categorySubTitle'] = null;
-
         $this->view->title = $category->title;
 
-        $phoneValue = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
-
+        $this->view->params['categoryId'] = $category->id;
 
         return $this->render('category',[
-            'model' => $model,
             'orders' => $orders,
             'pagination' => $pagination,
             'category' => $category,
-            'phoneValue' => $phoneValue,
+        ]);
+    }
+
+    public function actionView($id)
+    {   
+        $this->layout = 'view-layout';
+
+        $model = $this->findModel($id);
+
+        $message = new WriteMessage();
+
+        Yii::$app->params['defaultCategoryBg'] = $model->category->getImage();
+
+        Yii::$app->params['categoryTitle'] = $model->category->title;
+        
+        Yii::$app->params['categoryUrl'] = '/category/'.$model->category->url;
+
+        Yii::$app->params['categorySubTitle'] = null;
+
+        Yii::$app->session->removeFlash('error-model');
+
+        $this->view->title = 'Заказ '.$model->substrContent($model->content);
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+            'message' => $message,
         ]);
     }
 
@@ -289,29 +304,6 @@ class FrontendOrderController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {      
-        $model = $this->findModel($id);
-
-        $message = new WriteMessage();
-
-        Yii::$app->params['defaultCategoryBg'] = $model->category->getImage();
-
-        Yii::$app->params['categoryTitle'] = $model->category->title;
-        
-        Yii::$app->params['categoryUrl'] = '/category/'.$model->category->url;
-
-        Yii::$app->params['categorySubTitle'] = null;
-
-        Yii::$app->session->removeFlash('error-model');
-
-        $this->view->title = 'Заказ '.$model->substrContent($model->content);
-
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'message' => $message,
-        ]);
-    }
 
     /**
      * Updates an existing Order model.
@@ -321,7 +313,8 @@ class FrontendOrderController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
-    {
+    {   
+        $this->layout = 'view-layout';
         $model = $this->findModel($id);
 
         $update = new EditOrder($model);

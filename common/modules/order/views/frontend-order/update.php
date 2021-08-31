@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 ?>
-<h2 class="content-header d-lg-block d-none">Редактировать запрос</h2>
+<h2 class="content-header d-lg-block d-none">Редактировать заказ</h2>
 <div class="content">
     <?php $form = ActiveForm::begin([
         'id' => 'update-order-form',
@@ -95,7 +95,7 @@ use yii\widgets\LinkPager;
         <div class="popup-content">
             <span class="popup-close fa fa-close"></span>
             <div class="popup-body">
-                <h3 class="success-header">Ваш запрос опубликован</h3>
+                <h3 class="success-header">Ваш заказ успешно изменен<br>Ожидайте звонка от специалистов</h3>
                 <div class="success-img">
                     <img src="/frontend/themes/vse/img/success.png" alt="">
                 </div>
