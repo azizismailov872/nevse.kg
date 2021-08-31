@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use common\models\LoginForm;
 use common\models\User;
+use common\rbac\AuthorRule;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -13,10 +14,9 @@ use frontend\models\VerifyEmailForm;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use common\rbac\AuthorRule;
-use yii\helpers\Url;
 
 /**
  * Site controller
@@ -79,6 +79,7 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
 
     /**
      * Logs in a user.

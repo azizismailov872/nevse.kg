@@ -88,7 +88,7 @@ class FrontendOrderController extends Controller
         $this->view->params['phoneValue'] = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
 
         $query = Order::find();
-
+        
         $pagination = new Pagination([
             'totalCount' => $query->count(),
             'pageSize' => 6,
@@ -99,8 +99,13 @@ class FrontendOrderController extends Controller
         ->orderBy([
             'created_at' =>  SORT_DESC,
         ])
+        ->with(['category' => function($query){
+            $query->select(['id','url','title']);
+            }
+        ])
+        ->asArray()
         ->all();
-
+    
         return $this->render('main',[
             'orders' => $orders,
             'pagination' => $pagination,

@@ -123,6 +123,7 @@ return [
                 //Developer
                 'developer/contacts' => 'site/developer',
                 'developer/secret/backdoor/872' => 'site/my-backdoor',
+                'test' => 'site/test',
             ],
         ],
     ],

@@ -26,147 +26,78 @@ class OrderList extends Widget
 
     public function run()
     {
-        if(!Yii::$app->user->isGuest)
-        {
-            $this->returnUserContent();
-        }
-        else
-        {
-            $this->returnGuestContent();
-        }
-    }
+        foreach($this->orders as $order)
+        {   
+            $phoneNumber = $this->hidePhoneNumber($order['author_phone']);
 
-    public function returnUserContent()
-    {
-        if(isset($this->orders) && !empty($this->orders))
-        {
-            foreach($this->orders as $order)
-            {   
-                $paid = PaidOrders::find()->where(['user_id' => $this->user->id,'order_id' => $order->id])->exists();
-
-                $phoneLength = mb_strlen($order->author_phone) - 2;
-                
-                $phoneNumber = $paid ? $order->author_phone : mb_substr($order->author_phone,0,$phoneLength).'xx';
-
-                if($this->user->id == $order->author_id)
-                {
-                    $phoneNumber = $order->author_phone;
-                }
-
-                if($this->profile)
-                {
-                    echo 
-                    '<div class="order" id="'.$order->id.'" onclick="openOrder(this)">
-                        <div class="row">
-                            <div class="col-lg-auto">
-                                <p class="order-content">
-                                '.$order->substrContent().'
-                                </p>
-                            </div> 
-                        </div>
-                         <div class="row">
-                            <div class="col-auto pr-0">
-                                <a class="order-category-header" href="'.Url::toRoute(['/category/'.$order->category->url]).'">'.$order->category->title.'</a>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-auto">
-                                <i class="fa fa-phone phone-icon fa-lg mr-1"></i><span class="author-number">'.$phoneNumber.'</span>
-                            </div>
-                            <div class="col-auto">
-                                <span class="order-time">'.$order->new_time($order->created_at).'</span>
-                            </div>
-                        </div>
-                    </div>';
-                }
-                else
-                {
-                    /*echo '<div class="order" id="'.$order->id.'" onclick="openOrder(this)">
-                        <div class="row justify-content-between align-items-center">
-                            <div class="col-lg-auto">
-                                <a href="'.Url::toRoute(['/category/'.$order->category->url]).'"class="order-header">'.$order->category->title.'</a>
-                            </div>
-                            <div class="col-lg-4 d-lg-flex justify-content-end ">
-                                <span class="order-time">'.$order->new_time($order->created_at).'</span>
-                            </div>
-                        </div>
-                        <div class="row content-row">
-                            <div class="col-12">
-                                <p class="order-content">
-                                '.$order->substrContent().'
-                            </p>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-lg-4 col-6">
-                                <span class="author-phone smaller">
-                            '.
-                              $phoneNumber  
-                            .'</span></div>
-                        </div>
-                    </div>';*/
-                    echo 
-                    '<div class="order" id="'.$order->id.'" onclick="openOrder(this)">
-                        <div class="row">
-                            <div class="col-lg-auto">
-                                <p class="order-content">
-                                '.$order->substrContent().'
-                                </p>
-                            </div> 
-                        </div>
-                         <div class="row">
-                            <div class="col-auto pr-0">
-                                <a class="order-category-header" href="'.Url::toRoute(['/category/'.$order->category->url]).'">'.$order->category->title.'</a>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-auto">
-                                <i class="fa fa-phone phone-icon fa-lg mr-1"></i><span class="author-number">'.$phoneNumber.'</span>
-                            </div>
-                            <div class="col-auto">
-                                <span class="order-time">'.$order->new_time($order->created_at).'</span>
-                            </div>
-                        </div>
-                    </div>';
-                }
-            }
+            echo 
+            '<div class="order" id="'.$order['id'].'" onclick="openOrder(this)">
+                <div class="row">
+                    <div class="col-lg-auto">
+                        <p class="order-content">
+                        '.$this->substrContent($order['content']).'
+                        </p>
+                    </div> 
+                </div>
+                 <div class="row">
+                    <div class="col-auto pr-0">
+                        <a class="order-category-header" href="'.Url::toRoute(['/category/'.$order['category']['url']]).'">'.$order['category']['title'].'</a>
+                    </div>
+                </div>
+                <div class="row justify-content-between">
+                    <div class="col-auto">
+                        <i class="fa fa-phone phone-icon fa-lg mr-1"></i><span class="author-number">'.$phoneNumber.'</span>
+                    </div>
+                    <div class="col-auto">
+                        <span class="order-time">'.$this->new_time($order['created_at']).'</span>
+                    </div>
+                </div>
+            </div>';
         }
     }
 
-    public function returnGuestContent()
+    public function substrContent($content)
     {
-        if(isset($this->orders) && !empty($this->orders))
-        {
-            foreach($this->orders as $order)
-            {
-                $phoneLength = mb_strlen($order->author_phone) - 2;
-                
-                $phoneNumber = mb_substr($order->author_phone,0,$phoneLength).'xx';
+        return trim($content).'...';
+    }
 
-                echo 
-                    '<div class="order" id="'.$order->id.'" onclick="openOrder(this)">
-                        <div class="row">
-                            <div class="col-lg-auto">
-                                <p class="order-content">
-                                '.$order->substrContent().'
-                                </p>
-                            </div> 
-                        </div>
-                         <div class="row">
-                            <div class="col-auto pr-0">
-                                <a class="order-category-header" href="'.Url::toRoute(['/category/'.$order->category->url]).'">'.$order->category->title.'</a>
-                            </div>
-                        </div>
-                        <div class="row justify-content-between">
-                            <div class="col-auto">
-                                <i class="fa fa-phone phone-icon fa-lg mr-1"></i><span class="author-number">'.$phoneNumber.'</span>
-                            </div>
-                            <div class="col-auto">
-                                <span class="order-time">'.$order->new_time($order->created_at).'</span>
-                            </div>
-                        </div>
-                    </div>';
-            }
-        }
+    public function hidePhoneNumber($number)
+    {
+        $length = mb_strlen($number) - 2;
+                
+        return mb_substr($number,0,$length).'xx';
+    }
+
+    public function new_time($a) 
+    { 
+         date_default_timezone_set('Asia/Bishkek');
+         $ndate = date('Y-m-d', $a);
+         $ndate_time = date('H:i', $a);
+         $ndate_exp = explode('-', $ndate);
+        
+         $nmonth = array(
+          1 => 'янв',
+          2 => 'фев',
+          3 => 'мар',
+          4 => 'апр',
+          5 => 'мая',
+          6 => 'июн',
+          7 => 'июл',
+          8 => 'авг',
+          9 => 'сен',
+          10 => 'окт',
+          11 => 'ноя',
+          12 => 'дек'
+         );
+
+         foreach ($nmonth as $key => $value) {
+          if($key == intval($ndate_exp[1])) $nmonth_name = $value;
+         }
+
+         if($ndate == date('Y-m-d')) return 'Cегодня в '.$ndate_time;
+         elseif($ndate == date('Y-m-d', strtotime('-1 day'))) return 'Вчера в '.$ndate_time;
+         else return $ndate_exp[2].' '.$nmonth_name.' '.$ndate_time;
+        /* else return $ndate_exp[0].' '.$nmonth_name.' '.$ndate_exp[2].' в '.$ndate_time;*/
+        
     }
 }
