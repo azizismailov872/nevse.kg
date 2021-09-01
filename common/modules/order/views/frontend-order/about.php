@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 
 ?>
+<h3 class="content-header d-lg-block text-lg-left text-center new-cont"><?= $this->params['pageTitle']?></h3>
 <div class="about">
     <div class="row">
         <div class="col-12">

@@ -1841,3 +1841,10 @@ li {
         padding-bottom: 10px;
     }
 }
+
+
+.about-content
+{
+    color: #2e2e2e;
+    font-weight: 500;
+}
