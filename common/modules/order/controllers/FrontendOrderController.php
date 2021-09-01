@@ -99,7 +99,7 @@ class FrontendOrderController extends Controller
 
     public function actionIndex()
     {   
-
+        
         $query = Order::find();
 
         $page = Pages::find()->where(['page' => 'main'])->one();
@@ -212,16 +212,16 @@ class FrontendOrderController extends Controller
         $msg = 'Запрос не был создан';
 
         if($request->isAjax)
-        {
+        {   
             $post = Yii::$app->request->post();
-           
+            
             //Get model
             $model = new CreateOrder();
-            
             //Validate data
             if($model->load(Yii::$app->request->post()))
             {   
                 //Save data in modele
+                
                 if($model->createOrder())
                 {      
                     $result = true;

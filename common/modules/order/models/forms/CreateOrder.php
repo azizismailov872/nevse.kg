@@ -106,6 +106,8 @@ class CreateOrder extends Model
 
 			$model->status = 1;
 
+			$result = false;
+
 			if(!Yii::$app->user->isGuest)
 			{
 				$model->author_id = Yii::$app->user->getId();
@@ -121,7 +123,43 @@ class CreateOrder extends Model
 				$model->author_name = 'Гость';
 			}
 
-			return $model->save();
+			if($model->save())
+			{
+				$id = $model->getPrimaryKey();
+
+				$this->sendNotifications($model,$id);
+
+				return true;
+			}
+
+			return $result;
 		}
 	}
+
+	public function sendNotifications($order,$id)
+	{	
+		$users = User::find()->select('email')->asArray()->all();
+
+		$result = false;
+
+		foreach($users as $user)
+		{	
+			Yii::$app->mailer->htmlLayout = 'layouts/new-order';
+			
+			$result = Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => 'new-order'],
+                ['order' => $order,'id' =>$id]
+            )
+            ->setFrom('Artbele@yandex.ru')
+            ->setTo($user['email'])
+            ->setSubject($order->content)
+            ->send();
+		}
+
+		return $result;
+		
+	}
+
 }

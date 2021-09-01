@@ -33,7 +33,7 @@ use yii\widgets\LinkPager;
     <div class="popup-content">
         <span class="popup-close fa fa-close"></span>
         <div class="popup-body">
-            <h3 class="success-header">Ваш заказ успешно создан<br>Ожидайте звонка от специалистов</h3>
+            <h3 class="success-header">Ваш заказ успешно создан<br>Ожидайте звонка <br class="d-md-none d-block">от специалистов</h3>
             <div class="success-img">
                 <img src="/frontend/themes/vse/img/success.png" alt="">
             </div>
