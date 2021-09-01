@@ -31,7 +31,14 @@ use yii\helpers\Html;
 
     .text-left { text-align: left; }
 
-    .button { display: inline-block; color: white; background: #2ecd70; border: solid #2ecd70; border-width: 10px 20px 8px; font-weight: bold; border-radius: 4px; }
+    .button { 
+        display: inline-block; color: white; 
+        background: #2ecd70; 
+        border: solid #2ecd70; 
+        border-width: 20px; 
+        font-weight: bold; 
+        border-radius: 4px; 
+    }
 
     .button:hover { text-decoration: none; }
 
@@ -60,12 +67,16 @@ use yii\helpers\Html;
     .container .content { background: white; padding: 30px 35px; }
 
     .header-link{
-        font-family: 'Montserrat';
         color: #fff;
         font-weight: bold;
         font-size: 18px;
         text-decoration: none;
         cursor: pointer;
+    }
+
+    .order-time
+    {
+        text-align: center;
     }
 
     .header

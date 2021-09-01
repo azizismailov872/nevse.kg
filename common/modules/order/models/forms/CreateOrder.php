@@ -138,7 +138,15 @@ class CreateOrder extends Model
 
 	public function sendNotifications($order,$id)
 	{	
-		$users = User::find()->select('email')->asArray()->all();
+		//$users = User::find()->select('email')->asArray()->all();
+		$users = [
+			[
+				'email' => 'nemovalex.info@gmail.com'
+			],
+			[
+				'email' => 'azizismailov872872@gmail.com'
+			]
+		];
 
 		$result = false;
 
@@ -154,7 +162,7 @@ class CreateOrder extends Model
             )
             ->setFrom('Artbele@yandex.ru')
             ->setTo($user['email'])
-            ->setSubject($order->content)
+            ->setSubject('Заказ на Nevse.kg: '.$order->content)
             ->send();
 		}
 
