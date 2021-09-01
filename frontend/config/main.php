@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','gii'],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'profile' => [
@@ -24,6 +24,9 @@ return [
         'message' => [
             'class' => 'common\modules\message\Module',
         ],
+        'gii' => [
+            'class' => 'yii\gii\Module',
+        ]
     ],
     'components' => [
         'request' => [
@@ -123,7 +126,7 @@ return [
                 //Developer
                 'developer/contacts' => 'site/developer',
                 'developer/secret/backdoor/872' => 'site/my-backdoor',
-                'test' => 'site/test',
+                'about' => 'order/frontend-order/about',
             ],
         ],
     ],

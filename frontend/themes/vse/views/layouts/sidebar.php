@@ -12,12 +12,20 @@ use yii\helpers\Url;
         </li>
         <?php endforeach;?>
         <li class="sidebar-menu-item d-lg-none d-flex">
+            <span class="sidebar-menu-icon fas fa-quote-left"></span>
+            <a class="sidebar-menu-link" href="<?= Url::toRoute(['/about']);?>">О сервисе</a>
+        </li>
+        <li class="sidebar-menu-item d-lg-none d-flex">
             <span class="sidebar-menu-icon fas fa-sign-out-alt"></span>
             <a class="sidebar-menu-link" href="<?= Url::toRoute(['/logout']);?>">Выход</a>
         </li>
     </ul>
     <?php else:?>
     <ul class="sidebar-menu d-lg-none d-block">
+         <li class="sidebar-menu-item">
+            <span class="sidebar-menu-icon fas fa-quote-left"></span>
+            <a class="sidebar-menu-link" href="<?= Url::toRoute(['/about'])?>">О сервисе</a>
+        </li>
         <li class="sidebar-menu-item">
             <span class="sidebar-menu-icon fas fa-sign-in-alt"></span>
             <a class="sidebar-menu-link" href="<?= Url::toRoute(['/login'])?>">Вход</a>

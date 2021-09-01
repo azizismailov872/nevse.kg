@@ -47,6 +47,15 @@ use yii\widgets\DetailView;
 								return '<h3>'.$model->title.'</h3>';
 							}
 			            ],
+			             [
+							'attribute' => 'pageTitle',
+							'format' => 'html',
+							'label' => 'Заголовок страницы',
+							'value' => function($model)
+							{
+								return '<h3>'.$model->pageTitle.'</h3>';
+							}
+			            ],
 						[
 							'attribute' => 'url',
 							'format' => 'url',

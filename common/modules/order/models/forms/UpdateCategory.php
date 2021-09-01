@@ -12,6 +12,8 @@ class UpdateCategory extends Model
 
 	public $title;
 
+	public $pageTitle;
+
 	public $url;
 
 	public $status;
@@ -27,7 +29,8 @@ class UpdateCategory extends Model
 		return [
 			[['title'],'checkUniqueTitle'],
 			[['url'],'checkUniqueUrl'],
-			[['title','url','icon'],'string'],
+			[['pageTitle'],'required','message' => 'Заголовк страницы обязательно поле'],
+			[['title','url','icon','pageTitle'],'string'],
 			[['order','status'],'integer'],
 			[['image'],'file','extensions' => 'jpg, png'],
 		];

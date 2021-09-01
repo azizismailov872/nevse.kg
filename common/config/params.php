@@ -32,8 +32,8 @@ return [
     'categoryImg' => 'main-bg.jpg',
     'profileImg' => 'default.png',
     'categoryUrl' => '/',
-    //Default
     'defaultCategoryBg' => Yii::getAlias('@categories-bg').'/main-bg.jpg',
+    //Default
     'swearWords' => [
         'Хуй',
         'Сука',

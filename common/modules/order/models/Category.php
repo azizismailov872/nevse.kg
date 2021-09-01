@@ -51,8 +51,9 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required','message' => 'Поле "название" не может быть пустым'],
+            [['pageTitle'], 'required','message' => 'Поле "заголовк страницы" не может быть пустым'],
             [['order', 'status', 'parent_id', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'background', 'url', 'icon'], 'string', 'max' => 255],
+            [['title', 'background', 'url', 'icon','pageTitle'], 'string', 'max' => 255],
             [['parent_id'],'default','value' => 0],
             [['status'],'default','value' => 1],
             [['background'],'default','value' => 'main-bg.jpg'],
@@ -68,6 +69,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Название',
+            'pageTitle' => 'Заголвок страницы',
             'background' => 'Фон',
             'url' => 'Ссылка',
             'order' => 'Очередь',

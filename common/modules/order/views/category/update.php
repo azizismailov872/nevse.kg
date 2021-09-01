@@ -56,6 +56,18 @@ use yii\widgets\Pjax;
                     ',
                     'labelOptions' => ['class' => 'col-form-label col-md-3 col-sm-3 label-align'],
                 ])->textInput(['class' => 'form-control','placeholder' => 'Название'])->label('Название');?>
+                 <?= $form->field($update,'pageTitle',[
+                    'template' => '
+                        <div class="item form-group">
+                            {label}
+                            <div class="col-md-6 col-sm-6 ">
+                               {input}
+                            </div>
+                            {error}
+                        </div>
+                    ',
+                    'labelOptions' => ['class' => 'col-form-label col-md-3 col-sm-3 label-align'],
+                ])->textInput(['class' => 'form-control','placeholder' => 'Заголовок'])->label('Заголовок страницы');?>
                  <?= $form->field($update,'url',[
                     'template' => '
                         <div class="item form-group">

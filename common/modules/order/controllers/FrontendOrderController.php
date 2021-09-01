@@ -3,24 +3,21 @@
 namespace common\modules\order\controllers;
 
 use Yii;
-//User
 use common\models\User;
-//Tools
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\widgets\ActiveForm;
-use yii\data\Pagination;
-use yii\filters\AccessControl;
-use yii\helpers\Url;
-// Models
+use common\modules\content\models\Menu;
+use common\modules\content\models\Pages;
+use common\modules\message\models\forms\WriteMessage;
+use common\modules\order\models\Category;
 use common\modules\order\models\Order;
 use common\modules\order\models\PaidOrders;
 use common\modules\order\models\forms\CreateOrder;
 use common\modules\order\models\forms\EditOrder;
-
-use common\modules\message\models\forms\WriteMessage;
-use common\modules\order\models\Category;
-use common\modules\content\models\Menu;
+use yii\data\Pagination;
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\widgets\ActiveForm;
 
 
 /**
@@ -72,22 +69,40 @@ class FrontendOrderController extends Controller
 
         $this->view->params['sidebarCategories'] = (isset($categoriesList) && !empty($categoriesList)) ? $categoriesList : null;
 
+        $this->view->params['defaultCategoryBg'] = '/common/modules/order/images/main-bg.jpg';
+
         return parent::beforeAction($action); 
         
+    }
+
+    public function actionAbout()
+    {   
+        $this->layout = 'view-layout';
+
+        $model = Pages::find()->where(['page' => 'about'])->one();
+
+        if(!isset($model) && empty($model))
+        {
+            return $this->redirect(['/']);
+        }
+
+        $this->view->params['pageTitle'] = $model->title;
+
+        $this->view->title = $model->title;
+
+        $this->view->params['pageUrl'] = '/about';
+
+        return $this->render('about',[
+            'model' => $model
+        ]);
     }
 
     public function actionIndex()
     {   
 
-        $this->view->title = 'VSЁ';
-
-        $this->view->params['model'] = new CreateOrder();
-
-        $this->view->params['categoriesList'] = Category::getCategoriesList();
-
-        $this->view->params['phoneValue'] = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
-
         $query = Order::find();
+
+        $page = Pages::find()->where(['page' => 'main'])->one();
         
         $pagination = new Pagination([
             'totalCount' => $query->count(),
@@ -105,7 +120,17 @@ class FrontendOrderController extends Controller
         ])
         ->asArray()
         ->all();
-    
+
+        $this->view->title = 'VSЁ';
+
+        $this->view->params['model'] = new CreateOrder();
+
+        $this->view->params['categoriesList'] = Category::getCategoriesList();
+
+        $this->view->params['phoneValue'] = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
+
+        $this->view->params['pageTitle'] = (isset($page) && !empty($page)) ? $page->title : null;
+
         return $this->render('main',[
             'orders' => $orders,
             'pagination' => $pagination,
@@ -114,17 +139,10 @@ class FrontendOrderController extends Controller
 
     public function actionCategory($url)
     {   
-        
-        $this->view->params['model'] = new CreateOrder();
-
-        $this->view->params['categoriesList'] = Category::getCategoriesList();
-
-        $this->view->params['phoneValue'] = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
-
         $category = Category::find()->where(['url' => $url])->one();
 
         $query = Order::find()->where(['category_id' => $category->id]);
-        
+
         $pagination = new Pagination([
             'totalCount' => $query->count(),
             'pageSize' => 6,
@@ -137,15 +155,19 @@ class FrontendOrderController extends Controller
         ])
         ->all();
 
-        Yii::$app->params['defaultCategoryBg'] = $category->getImage();
+        $this->view->params['model'] = new CreateOrder();
 
-        Yii::$app->params['categoryTitle'] = $category->title;
-        
-        Yii::$app->params['categoryUrl'] = '/category/'.$category->url;
+        $this->view->params['categoriesList'] = Category::getCategoriesList();
+
+        $this->view->params['categoryId'] = $category->id;
+
+        $this->view->params['phoneValue'] = (!Yii::$app->user->isGuest) ? Yii::$app->user->identity->setPhoneValue() : '';
+
+        $this->view->params['defaultCategoryBg'] = $category->getImage();
 
         $this->view->title = $category->title;
 
-        $this->view->params['categoryId'] = $category->id;
+        $this->view->params['pageTitle'] = $category->pageTitle;
 
         return $this->render('category',[
             'orders' => $orders,
@@ -162,13 +184,11 @@ class FrontendOrderController extends Controller
 
         $message = new WriteMessage();
 
-        Yii::$app->params['defaultCategoryBg'] = $model->category->getImage();
+        $this->view->params['defaultCategoryBg'] = $model->category->getImage();
 
-        Yii::$app->params['categoryTitle'] = $model->category->title;
-        
-        Yii::$app->params['categoryUrl'] = '/category/'.$model->category->url;
+        $this->view->params['pageTitle'] = $model->category->title;
 
-        Yii::$app->params['categorySubTitle'] = null;
+        $this->view->params['pageUrl'] = '/category/'.$model->category->url;
 
         Yii::$app->session->removeFlash('error-model');
 

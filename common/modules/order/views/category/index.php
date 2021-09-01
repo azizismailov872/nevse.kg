@@ -47,7 +47,7 @@ use yii\jui\DatePicker;
                             </div>
                     ',
                 ])->textInput(['class' => 'form-control'])?>
-                 <?= $form->field($searchModel,'title',[
+                <?= $form->field($searchModel,'title',[
                     'template' => '
                             <div class="col-lg-4">
                                <div class="input-title">
@@ -130,7 +130,12 @@ use yii\jui\DatePicker;
                             [
                                 'attribute'=>'title',
                                 'format'=>'text',//raw, html
-                                'label' => 'Меню',
+                                'label' => 'Категория',
+                            ],
+                            [
+                                'attribute'=>'pageTitle',
+                                'format'=>'text',//raw, html
+                                'label' => 'Заголовок страницы',
                             ],
                             [
                                 'attribute'=>'icon',

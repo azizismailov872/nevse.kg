@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
                         ]
                     ],
                 ]);?>
-                 <?= $form->field($model,'title',[
+                <?= $form->field($model,'title',[
                     'template' => '
                         <div class="item form-group">
                             {label}
@@ -47,6 +47,17 @@ use yii\widgets\ActiveForm;
                     ',
                     'labelOptions' => ['class' => 'col-form-label col-md-3 col-sm-3 label-align'],
                 ])->textInput(['class' => 'form-control','placeholder' => 'Категория...'])->label('Название');?>
+                <?= $form->field($model,'pageTitle',[
+                    'template' => '
+                        <div class="item form-group">
+                            {label}
+                            <div class="col-md-6 col-sm-6 ">
+                               {input}
+                            </div>
+                        </div>
+                    ',
+                    'labelOptions' => ['class' => 'col-form-label col-md-3 col-sm-3 label-align'],
+                ])->textInput(['class' => 'form-control','placeholder' => 'Заголовок...'])->label('Заголовок страницы');?>
                  <?= $form->field($model,'url',[
                     'template' => '
                         <div class="item form-group">

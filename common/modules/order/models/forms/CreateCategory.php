@@ -14,6 +14,8 @@ class CreateCategory extends Model
 
 	public $title;
 
+	public $pageTitle;
+
 	public $url;
 
 	public $status;
@@ -24,12 +26,13 @@ class CreateCategory extends Model
 
 	public $icon;
 
+
 	public function rules()
 	{
 		return [
 			[['title'],'unique','targetClass' => Category::className(),'targetAttribute' => ['title' => 'title'],'message' => 'Категория с таким названием уже существует'],
 			[['url'],'unique','targetClass' => Category::className(),'targetAttribute' => ['url' => 'url'],'message' => 'Категория с такой ссылкой уже существует'],
-			[['title','url','icon'],'string','message' => 'Превышено максимальное колличество символов'],
+			[['title','url','icon','pageTitle'],'string','message' => 'Превышено максимальное колличество символов'],
 			[['status','order'],'integer'],
 			[['status'],'default','value' => self::STATUS_ACTIVE],
 			[['order'],'default','value' => 0],

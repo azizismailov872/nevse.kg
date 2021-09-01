@@ -7,13 +7,6 @@ use yii\helpers\Url;
 
 AppAsset::register($this);
 
-//Variables
-$background = Yii::$app->params['defaultCategoryBg'];
-
-$categoryUrl = Url::toRoute([Yii::$app->params['categoryUrl']]);
-
-$categoryTitle = Yii::$app->params['categoryTitle'];
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -35,11 +28,11 @@ $categoryTitle = Yii::$app->params['categoryTitle'];
 <?php $this->beginBody() ?>
 	<div class="wrap">
 		<?= $this->render('header');?>
-		<section class="main-category" style="background-image: url(<?= $background ?>);">
+		<section class="main-category" style="background-image: url(<?= $this->params['defaultCategoryBg']; ?>);">
 			<div class="row align-items-center">
 				<div class="col-12">
 					<h2>
-						<a href="<?= $categoryUrl?>" class="category-title"><?= $categoryTitle;?></a>
+						<a href="<?= $this->params['pageUrl'] ?>" class="category-title"><?= $this->params['pageTitle'];?></a>
 					</h2>
 				</div>
 			</div>

@@ -4,16 +4,17 @@ use yii\helpers\Url;
 $model = $this->params['model'];
 $phoneValue = $this->params['phoneValue'];
 $categoriesList = $this->params['categoriesList'];
-$categoryTitle = (Yii::$app->params['categoryTitle'] !== 'Все категории') ? Yii::$app->params['categoryTitle'] : null;
+$pageTitle = $this->params['pageTitle'];
+
 $categoryId = (isset($this->params['categoryId']) && !empty($this->params['categoryId'])) ? $this->params['categoryId'] : null;
 ?>
 <div class="guest__content">
     <h1 class="guest__title">
-        <?php if($categoryTitle !== null) :?>
-        	<?= $categoryTitle ?>
+        <?php if(isset($pageTitle) && !empty($pageTitle)):?>
+        	<?= $pageTitle;?>
         <?php else: ?>
-			Выполним ваш заказ <br>Все услуги на одном сайте
-        <?php endif; ?>
+        	Выполним ваш заказ <br> Все услуги на одном сайт
+        <?php endif;?>
     </h1>
     <div class="guest__form-container">
     	<?php $form = ActiveForm::begin([

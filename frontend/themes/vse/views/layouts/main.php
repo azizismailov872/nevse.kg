@@ -27,7 +27,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 	<div class="wrap">
 		<?= $this->render('header') ?>
-		<section class="category" style="background-image: url(<?= Yii::$app->params['defaultCategoryBg'];?>);">
+		<section class="category" style="background-image: url(<?= $this->params['defaultCategoryBg'];?>);">
 			<div class="container d-flex justify-content-center align-tiems-center">
 				<?= $this->render('@common/modules/order/views/frontend-order/form/form')?>
 			</div>

@@ -90,7 +90,7 @@ return [
                 'login' => 'site/login',
                 'logout' => 'site/logout',
                 '/' => 'site/index',
-                //Меню
+                //menu
                 'menu' => 'content/menu/index',
                 'menu/create' => 'content/menu/create',
                 'menu/delete/<id:\d+>' => 'content/menu/delete',
@@ -132,6 +132,9 @@ return [
                 'order/delete/<id:\d+>' => 'order/backend-order/delete',
                 'order/view/<id:\d+>' => 'order/backend-order/view',
                 'order/remove' => 'order/backend-order/delete-ajax',
+
+                'pages/edit/<url:\w+>' => 'content/pages/edit',
+               
             ],
         ],
         

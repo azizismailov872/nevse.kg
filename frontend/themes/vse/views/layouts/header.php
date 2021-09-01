@@ -14,6 +14,9 @@ use yii\helpers\Html;
 			</div>
 			<div class="col-lg-10 d-lg-block d-none">
 				<ul class="menu">
+					<li class="menu-item mr-3">
+						<?= Html::a('О сервисе',Url::toRoute(['/about']),['class' => 'menu-link']);?>
+					</li>
 					<?php if(Yii::$app->user->isGuest):?>
 					<li class="menu-item">
 						<?= Html::a('Вход',Url::toRoute(['/login']),['class' => 'menu-link']);?>
