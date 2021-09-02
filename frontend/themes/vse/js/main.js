@@ -1,3 +1,10 @@
+var swiper = new Swiper(".swiper-category", {
+    slidesPerView: "auto",
+    spaceBetween: 15,
+    mousewheel: true,
+    loop: true,
+});
+
 let lockPaddingValue = window.innerWidth - document.querySelector('.wrap').offsetWidth + 'px';
 
 //Сохранение заказа по клавише Enter

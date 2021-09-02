@@ -983,8 +983,8 @@ li {
     bottom: 65px;
     right: 17px;
     text-align: center;
-    visibility: hidden;
-    opacity: 0;
+    visibility: visible;
+    opacity: 1;
     transition: all 0.4s linear
 }
 
@@ -999,13 +999,6 @@ li {
     color: #fff
 }
 
-@media (max-width: 768px) {
-    .up-to-top.active {
-        visibility: visible;
-        opacity: 1;
-        transition: all 0.4s linear
-    }
-}
 
 .error {
     padding: 15px;

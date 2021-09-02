@@ -1,12 +1,13 @@
 <?php 
 
-use yii\helpers\Url;
-use yii\helpers\Html;
-use yii\widgets\Pjax;
-use yii\widgets\ActiveForm;
 use common\widgets\OrderList;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
+use yii\widgets\Pjax;
 ?>
+<?= $this->render('categories-carusel') ?>
 <h3 class="content-header d-lg-block text-lg-left text-center new-cont">Новые заказы</h3>
 <div class="orders-list" id="orders-list">
 <?php Pjax::begin(['id' => 'orders-list-pjax']);?>
