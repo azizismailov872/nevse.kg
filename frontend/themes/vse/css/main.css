@@ -983,9 +983,16 @@ li {
     bottom: 65px;
     right: 17px;
     text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s linear
+}
+
+.up-to-top.active
+{
+    transition: linear 0.5s;
     visibility: visible;
     opacity: 1;
-    transition: all 0.4s linear
 }
 
 .up-to-top::after {
@@ -2047,7 +2054,7 @@ li {
 .swiper-category
 {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .swiper-category__item
@@ -2067,4 +2074,33 @@ li {
 :focus
 {
     color: #fff;
+}
+
+.notifications-check
+{
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+
+
+.notifications-label
+{
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Montserrat','Arial',sans-serif;
+    vertical-align: middle;
+}
+
+
+@media(max-width:992px){
+    .notifications-label
+    {
+        font-size: 14px;
+    }
+
+    .notifications-check
+    {
+        margin-right: 2px;
+    }
 }

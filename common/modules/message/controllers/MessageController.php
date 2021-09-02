@@ -3,15 +3,17 @@
 namespace common\modules\message\controllers;
 
 use Yii;
+use common\modules\content\models\Menu;
 use common\modules\message\models\Message;
 use common\modules\message\models\forms\WriteMessage;
 use common\modules\message\models\search\MessageSearch;
+use common\modules\order\models\Category;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\widgets\ActiveForm;
-use yii\helpers\Url;
 
 /**
  * MessageController implements the CRUD actions for Message model.
@@ -46,6 +48,12 @@ class MessageController extends Controller
     public function beforeAction($action) 
     { 
         Yii::$app->controller->enableCsrfValidation = false;
+
+        $this->view->params['menu'] = Yii::$app->user->isGuest ? null : Menu::getSidebarMenuList();
+
+        $categoriesList = Category::getSidebarCategoriesList();
+
+        $this->view->params['sidebarCategories'] = (isset($categoriesList) && !empty($categoriesList)) ? $categoriesList : null;
          
         return parent::beforeAction($action); 
     }

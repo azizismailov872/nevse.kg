@@ -15,7 +15,8 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@app/themes/vse';
     public $sourcePath = '@app/themes/vse';
     public $css = [
-        'css/main.min.css',
+        //'css/main.min.css',
+        'css/main.css',
         'boxicons/css/boxicons.min.css',
       	'fonts/typicons.min.css',
       	'fonts/fontawesome-all.min.css',
@@ -30,8 +31,8 @@ class AppAsset extends AssetBundle
         'js/mask/inputmask.binding.js',
         'js/mask/inputmask.js',
         'js/mask/jquery.inputmask.js',
-        'js/main.min.js',
-        //'js/main.js',
+        //'js/main.min.js',
+        'js/main.js',
       
     ];
     public $depends = [

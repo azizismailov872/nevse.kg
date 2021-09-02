@@ -6,6 +6,22 @@ use yii\widgets\DetailView;
 use common\modules\content\models\Menu;
 ?>
 <div class="row">
+    <?php if( Yii::$app->session->hasFlash('success') ): ?>
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible" role="alert" id="success-alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <?php echo Yii::$app->session->getFlash('success'); ?>
+            </div>
+        </div>
+    <?php endif;?>
+    <?php if( Yii::$app->session->hasFlash('error') ):?>
+        <div class="col-12">
+            <div class="alert alert-danger alert-dismissible" role="alert" id="error-alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <?php echo Yii::$app->session->getFlash('error'); ?>
+            </div>
+        </div>
+    <?php endif;?>
     <div class="col-12">
         <div class="x_panel">
             <div class="x_title">
@@ -26,6 +42,13 @@ use common\modules\content\models\Menu;
                         'data' => [
                             'confirm' => 'Вы точно хотите удалить ?',
                             'method' => 'post',
+                        ],
+                    ]) ?>
+                    <?= Html::a('Уведомить',Url::toRoute(['/order/notificate/'.$model->id]), [
+                        'class' => 'btn btn-success',
+                        'data' => [
+                            'confirm' => 'Вы точно хотите уведомить пользователей о новом заказе ?',
+                            'method' => 'get',
                         ],
                     ]) ?>
                 </p>

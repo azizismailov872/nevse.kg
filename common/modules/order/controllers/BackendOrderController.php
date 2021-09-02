@@ -3,12 +3,13 @@
 namespace common\modules\order\controllers;
 
 use Yii;
+use common\models\User;
+use common\modules\order\models\Category;
 use common\modules\order\models\Order;
 use common\modules\order\models\search\OrderSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\modules\order\models\Category;
-use yii\filters\AccessControl;
 
 /**
  * BackendOrderController implements the CRUD actions for Order model.
@@ -26,7 +27,7 @@ class BackendOrderController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','create','update','view','delete','delete-ajax'],
+                        'actions' => ['index','create','update','view','delete','delete-ajax','notificate'],
                         'allow' => true,
                         'roles' => ['admin','editor'],
                     ],
@@ -86,6 +87,53 @@ class BackendOrderController extends Controller
         return $this->render('view', [
             'model' => $model,
         ]);
+    }
+
+    public function actionNotificate($id)
+    {
+        $users = User::find()->where(['notifications' => 1])->select('email')->asArray()->all();
+
+        $order = Order::find()->where(['id' => $id])->one();
+
+        if(isset($order) && !empty($order))
+        {
+            foreach($users as $user)
+            {
+                Yii::$app->mailer->htmlLayout = 'layouts/new-order';
+                
+                try{
+                    $result = Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => 'new-order'],
+                        [
+                            'content' => $order->content,
+                            'id' => $id,
+                            'time' => $order->new_time($order->created_at)
+                        ]
+                    )
+                    ->setFrom('Nevse.kg@yandex.ru')
+                    ->setTo($user['email'])
+                    ->setSubject('Заказ на Nevse.kg: '.$order->content)
+                    ->send();
+                }
+                catch(\Exception $e)
+                {
+                    Yii::$app->session->setFlash('error','Ошибка. Уведомления не были отправлены');
+
+                    return $this->redirect(['/order/view/'.$id]);
+                }
+            }
+            Yii::$app->session->setFlash('success','Уведомления отправлены');
+
+            return $this->redirect(['/order/view/'.$id]);
+        }
+        else
+        {
+            Yii::$app->session->setFlash('error','Заказ не найден');
+
+            return $this->redirect(['/order/view/'.$id]);
+        }
     }
 
     /**

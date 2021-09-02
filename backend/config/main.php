@@ -132,6 +132,7 @@ return [
                 'order/delete/<id:\d+>' => 'order/backend-order/delete',
                 'order/view/<id:\d+>' => 'order/backend-order/view',
                 'order/remove' => 'order/backend-order/delete-ajax',
+                'order/notificate/<id:\d+>' => 'order/backend-order/notificate',
 
                 'pages/edit/<url:\w+>' => 'content/pages/edit',
                

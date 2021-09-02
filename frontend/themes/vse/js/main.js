@@ -1,6 +1,6 @@
 var swiper = new Swiper(".swiper-category", {
     slidesPerView: "auto",
-    spaceBetween: 15,
+    spaceBetween: 5,
     mousewheel: true,
     loop: true,
 });
@@ -88,7 +88,7 @@ $(document).ready(function(){
 
     //Cкролл
     $(window).scroll(function() {
-        if ($(this).scrollTop() > 80) {
+        if ($(this).scrollTop() > 300) {
             $('#up-to-top').addClass('active');
         } else{
             $('#up-to-top').removeClass('active');

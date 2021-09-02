@@ -195,7 +195,7 @@ use yii\widgets\Pjax;
                                 return $content." ...";
                             }
                         ],
-                        [
+                        /*[
                             'attribute' => 'author_name',
                             'format' => 'text',
                             'label' => 'Имя Автора',
@@ -203,7 +203,7 @@ use yii\widgets\Pjax;
                             {
                                 return (!empty($model['author_name'])) ? $model['author_name'] : 'Не указано';
                             }
-                        ],
+                        ],*/
                         [
                             'attribute' => 'author_phone',
                             'format' => 'url',
@@ -229,6 +229,15 @@ use yii\widgets\Pjax;
                             'content' => function($model)
                             {
                                 return ($model['status'] == 0) ? 'Не активен' : 'Активен';
+                            }
+                        ],
+                        [
+                            //'attribute' => 'status',
+                            'format' => 'text',
+                            'label' => 'Уведомить',
+                            'content' => function($model)
+                            {
+                                return '<a href="'.Url::toRoute(['/order/notificate/'.$model['id']]).'" target="_blank" class="btn btn-success notificate-button">Уведомить</a>';
                             }
                         ],
                         [
