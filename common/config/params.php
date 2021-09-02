@@ -19,9 +19,9 @@ Yii::setAlias('@categories-bg','/common/modules/order/images');
 Yii::setAlias('@profile-img','/common/modules/profile/images');
 
 return [
-    'adminEmail' => 'Artbele@yandex.ru',
-    'supportEmail' => 'Artbele@yandex.ru',
-    'senderEmail' => 'Artbele@yandex.ru',
+    'adminEmail' => 'Nevse.kg@yandex.ru',
+    'supportEmail' => 'Nevse.kg@yandex.ru',
+    'senderEmail' => 'Nevse.kg@yandex.ru',
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
     'defaultTheme' => Yii::getAlias('@frontend_theme'),
@@ -136,6 +136,22 @@ return [
         'ахуенные',
         'пиздатый',
         'пиздатые',
+        'Почта',
+        '@',
+        'Даун',
+        'Олень',
+        'Отстой',
+        'Фигня',
+        'Ерунда',
+        'Гавно',
+        'Говно',
+        'Охуенный',
+        'Охуеный',
+        'Ахуеный',
+        'Ахуенный',
+        'Порно',
+        'Шлюха',
+        'Проститутка',
     ],
 ];
 

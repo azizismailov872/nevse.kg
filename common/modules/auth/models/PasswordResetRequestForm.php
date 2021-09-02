@@ -59,7 +59,7 @@ class PasswordResetRequestForm extends Model
                 ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
                 ['user' => $user]
             )
-            ->setFrom('Artbele@yandex.ru')
+            ->setFrom('Nevse.kg@yandex.ru')
             ->setTo($this->email)
             ->setSubject('Сброс пароля для '.$user->email)
             ->send();

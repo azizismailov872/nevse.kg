@@ -160,7 +160,7 @@ class CreateOrder extends Model
                 ['html' => 'new-order'],
                 ['order' => $order,'id' =>$id]
             )
-            ->setFrom('Artbele@yandex.ru')
+            ->setFrom('Nevse.kg@yandex.ru')
             ->setTo($user['email'])
             ->setSubject('Заказ на Nevse.kg: '.$order->content)
             ->send();
