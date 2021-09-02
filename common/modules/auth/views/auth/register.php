@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
     ])->textInput(['class' => false,'placeholder' => 'Почта']);?>
     <?= $form->field($model,'password',[
         'template' => '
-             <div class="input__container login-input">
+             <div class="input__container login-input mb-4">
                 {input}
                 <i class="bx bx-lock icon"></i>
                 <div class="bg"></div>

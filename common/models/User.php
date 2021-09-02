@@ -68,7 +68,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             [['photo'],'default','value' => 'default.png'],
             [['image'],'safe'],
-            [['balance'],'default','value' => 0],
+            [['balance','notifications'],'default','value' => 0],
         ];
     }
 

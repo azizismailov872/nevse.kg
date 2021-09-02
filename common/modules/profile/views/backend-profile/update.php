@@ -140,6 +140,18 @@ use yii\widgets\Pjax;
                     ',
                     'labelOptions' => ['class' => 'col-form-label col-md-3 col-sm-3 label-align'],
                 ])->checkbox(['class' => 'js-switch','uncheck' => 0, 'check' => 1])->label('Статус');?>
+                <?= $form->field($update,'notifications',[
+                    'template' => '
+                        <div class="item form-group">
+                            {label}
+                            <div class="col-md-6 col-sm-6 ">
+                               {input}
+                            </div>
+                            {error}
+                        </div>
+                    ',
+                    'labelOptions' => ['class' => 'col-form-label col-md-3 col-sm-3 label-align'],
+                ])->checkbox(['class' => 'js-switch','uncheck' => 0, 'check' => 1])->label('Получать email уведомления');?>
                 <?= $form->field($update,'image',[
                     'template' => '
                         <div class="item form-group justify-content-center">

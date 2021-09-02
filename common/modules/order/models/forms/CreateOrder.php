@@ -106,8 +106,6 @@ class CreateOrder extends Model
 
 			$model->status = 1;
 
-			$result = false;
-
 			if(!Yii::$app->user->isGuest)
 			{
 				$model->author_id = Yii::$app->user->getId();
@@ -123,50 +121,34 @@ class CreateOrder extends Model
 				$model->author_name = 'Гость';
 			}
 
+
 			if($model->save())
 			{
 				$id = $model->getPrimaryKey();
 
-				$this->sendNotifications($model,$id);
+				$this->sendNotifications($id,$model->substrContent(),$model->new_time($model->created_at));
 
 				return true;
 			}
 
-			return $result;
+			return true;
 		}
 	}
 
-	public function sendNotifications($order,$id)
+	public function sendNotifications($id,$content,$time)
 	{	
-		//$users = User::find()->select('email')->asArray()->all();
-		$users = [
-			[
-				'email' => 'nemovalex.info@gmail.com'
-			],
-			[
-				'email' => 'azizismailov872872@gmail.com'
-			]
-		];
+		$url = 'http://nevse.local/order/notificate';
 
-		$result = false;
+		$data = array('content' => $content,'id' => $id,'time' => $time);
 
-		foreach($users as $user)
-		{	
-			Yii::$app->mailer->htmlLayout = 'layouts/new-order';
-			
-			$result = Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'new-order'],
-                ['order' => $order,'id' =>$id]
-            )
-            ->setFrom('Nevse.kg@yandex.ru')
-            ->setTo($user['email'])
-            ->setSubject('Заказ на Nevse.kg: '.$order->content)
-            ->send();
-		}
+		$ch = curl_init();
 
-		return $result;
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT_MS, 600);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+		curl_exec($ch);
+		curl_close($ch);
 		
 	}
 

@@ -24,6 +24,8 @@ class AppAsset extends AssetBundle
         'css/swiper-bundle.min.css',
     ];
     public $js = [
+        'js/bootstrap.min.js',
+        'js/popper.min.js',
         'js/swiper-bundle.min.js',
         'js/mask/inputmask.binding.js',
         'js/mask/inputmask.js',

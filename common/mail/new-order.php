@@ -15,8 +15,8 @@ use yii\helpers\Html;
                 <tr>
                     <td class="content">
                         <h2 class="header">Новый заказ на сайте Nevse.kg:</h2>
-                        <a href="https://nevse.kg/order/view/<?= $id?>" class="order-title"><?= $order->substrContent()?></a>
-                        <p class="order-time">Время: <?= $order->new_time($order->created_at) ;?></p>
+                        <a href="https://nevse.kg/order/view/<?= $id?>" class="order-title"><?= $content ?></a>
+                        <p class="order-time">Время: <?= $time ;?></p>
                         <table>
                             <tr>
                                 <td align="center">

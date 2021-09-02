@@ -16,6 +16,7 @@ class RegisterForm extends Model
 {
     public $email;
     public $password;
+    public $notifications;
     /**
      * {@inheritdoc}
      */
@@ -30,6 +31,7 @@ class RegisterForm extends Model
             ['email', 'unique', 'targetClass' => User::className(), 'message' => 'Пользователь с таким email уже существует'],
             ['password', 'required','message' => 'Введите пароль'],
             ['password','string','min' => 6,'tooShort' => 'Пароль должен содержать не менее 6 символов'],
+            ['notifications','default','value' => 1],
         ];
     }
 
@@ -58,7 +60,7 @@ class RegisterForm extends Model
     public function register($request)
     {
         if($this->load($request->post()) && $this->validate())
-        {
+        {   
             $user = new User();
 
             $user->email = $this->email;
@@ -68,6 +70,8 @@ class RegisterForm extends Model
             $user->generateAuthKey();
 
             $user->generateEmailVerificationToken();
+
+            $user->notifications = intval($this->notifications);
 
             if($user->save())
             {   

@@ -236,6 +236,44 @@ class FrontendOrderController extends Controller
         
     }
 
+    public function actionNotificate()
+    {   
+        $post = Yii::$app->request->post();
+        
+        if(isset($post) && !empty($post)){
+            //$users = User::find()->select('email')->asArray()->all();
+            $users = [
+                [
+                    'email' => 'azizismailov872872@gmail.com',
+                ],
+                [
+                    'email' => 'nemovalex.info@gmail.com',
+                ]
+            ];
+
+            foreach($users as $user)
+            {   
+                Yii::$app->mailer->htmlLayout = 'layouts/new-order';
+                
+                $result = Yii::$app
+                ->mailer
+                ->compose(
+                    ['html' => 'new-order'],
+                    [
+                        'content' => $post['content'],
+                        'id' => $post['id'],
+                        'time' => $post['time']
+                    ]
+                )
+                ->setFrom('Nevse.kg@yandex.ru')
+                ->setTo($user['email'])
+                ->setSubject('Заказ на Nevse.kg: '.$post['content'])
+                ->send();
+            }
+        }
+        return true;  
+    }
+
     public function actionUpdateOrders()
     {   
         $user = User::find()->where(['username' => 'Без автора'])->one();

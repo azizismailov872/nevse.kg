@@ -71,13 +71,6 @@ return [
                     'css' => [
                         'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css',
                     ],
-                    'js' => [
-                        'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js',
-                        'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'
-                    ]
-                ],
-                'yii\web\JqueryAsset' => [
-                    'js' => ['https://cdn.jsdelivr.net/jquery/3.2.1/jquery.js'],
                 ],
             ],
         ],
@@ -109,6 +102,7 @@ return [
                 'order/delete/<id:\d+>' => 'order/frontend-order/delete',
                 'order/pay' => 'order/frontend-order/pay',
                 'order/update/<id:\d+>' => 'order/frontend-order/update',
+                'order/notificate' => 'order/frontend-order/notificate',
                 'update-orders' => 'order/frontend-order/update-orders',
                 //Категории
                 'category/<url:[\w\-]+>' => 'order/frontend-order/category',

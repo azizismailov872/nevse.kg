@@ -136,7 +136,7 @@ use yii\helpres\Url;
             ],
         ])->passwordInput(['class' => false,'placeholder' => 'Новый пароль']);?>
     </div>
-    <div class="row">
+    <div class="row mb-2">
          <div class="col-12">
             <h2 class="edit-description-header">
                 Описание
@@ -151,6 +151,20 @@ use yii\helpres\Url;
                 'class' => 'col-12',
             ],
         ])->textarea(['class' => 'edit-profile-textarea','placeholder' => 'Описание профиля']);?>
+    </div>
+    <div class="row">
+        <?= $form->field($update,'notifications',[
+            'template' => '
+                <div class="col-12 notifications-group mb-3">
+                    {input}
+                    {label}
+                </div>
+            ',
+            'labelOptions' => ['class' => 'notifications-label'],
+            'options' => [
+                'tag' => false
+            ]
+        ])->checkbox(['label' => null,'class' => 'notifications-check','uncheck' => 0, 'check' => 1])->label('Получать email уведомления');?>
     </div>
     <div class="row">
         <div class="col-12">

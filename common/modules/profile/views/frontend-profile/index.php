@@ -24,13 +24,15 @@ use yii\widgets\LinkPager;
                 <div class="col-12 d-flex d-lg-block  justify-content-center justify-content-lg-start">
                     <a href="#" class="profile-balance popup-open" id="plus-balance">Баланс: <span class="balance"><?= $user->balance;?><u>с</u></span><span class="plus-icon fa fa-plus-circle"></span></a>
                 </div>
-                <div class="col-12 d-flex d-lg-block  justify-content-center justify-content-lg-start">
+                <div class="col-12 d-flex d-lg-block ustify-content-center justify-content-lg-start">
                     <?php if($user->hasPhone()) :?>
                         <a href="tel:<?= $user->getPhone()?>" class="profile-phone" style="cursor:pointer;">Телефон: <?= $user->getPhone();?></a>
                     <?php else :?>
                         <a class="profile-phone" style="cursor:pointer;">Телефон: <?= $user->getPhone();?></a>
                     <?php endif;?>
-
+                </div>
+                <div class="col-12 d-flex d-lg-block  justify-content-center justify-content-lg-start mb-3">
+                    Уведомления: <?= ($user->notifications) ? 'Включены' : 'Отключены' ?>
                 </div>
                 <div class="col-10 col-sm-10 col-md-6 col-lg-6">
                     <button class="button green full popup-open" id="plus-balance">Пополнить баланс</button>

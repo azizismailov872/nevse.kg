@@ -33,6 +33,8 @@ class UpdateFrontendUser extends Model
 
 	public $photo;
 
+	public $notifications;
+
 	function __construct($user)
 	{
 		$this->user = $user;
@@ -48,7 +50,7 @@ class UpdateFrontendUser extends Model
 			[['email'],'checkUniqueEmail'],
 			[['email'],'required','message' => 'Введите email'],
 			[['username'],'checkUniqueUsername'],
-			[['status','balance'],'integer'],
+			[['status','balance','notifications'],'integer'],
 			[['username','surname','newPassword'],'string','max' => 255],
 			[['image'],'file','extensions' => 'jpg,png,jpeg','wrongExtension' => 'Загрузите фотографию с расширением: jpg, png, jpeg','maxSize' => 3145728,'tooBig' => 'Максимальный размер изображения 3МБ'],
 			[['photo'],'string'],
@@ -180,6 +182,18 @@ class UpdateFrontendUser extends Model
 		if($this->validate())
 		{	
 			$this->user->attributes = $this->attributes;
+
+			if(!isset($this->username) && $this->username == '')
+			{
+				$this->username = null;
+			}
+
+			if(!isset($this->surname) && $this->surname == '')
+			{
+				$this->surname = null;
+			}
+
+			
 			$this->user->image = $this->image;
 			if(isset($this->newPassword) && !empty($this->newPassword))
 			{
@@ -187,7 +201,6 @@ class UpdateFrontendUser extends Model
 			}
 			
 			return $this->user->save();
-
 		
 		}
 	}

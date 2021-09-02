@@ -31,6 +31,8 @@ class UpdateUser extends Model
 
 	public $photo;
 
+	public $notifications;
+
 	function __construct($user)
 	{
 		$this->user = $user;
@@ -45,7 +47,7 @@ class UpdateUser extends Model
 			[['email'],'email'],
 			[['email'],'checkUniqueEmail'],
 			[['username'],'checkUniqueUsername'],
-			[['status','balance'],'integer'],
+			[['status','balance','notifications'],'integer'],
 			[['username','surname','password','phone'],'string','max' => 255],
 			[['image'],'file','extensions' => 'jpg, png, jpeg'],
 			[['photo'],'string'],
@@ -58,6 +60,7 @@ class UpdateUser extends Model
 	{
 		return [
 			'status' => '',
+			'notifications' => ''
 		];
 	}
 
@@ -115,6 +118,8 @@ class UpdateUser extends Model
 	{
 		if($this->validate())
 		{	
+			$this->notifications = intval($this->notifications);
+
 			$this->user->attributes = $this->attributes;
 
 			$this->user->image = (!empty($image)) ? $image : null;
