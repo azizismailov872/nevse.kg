@@ -19,10 +19,10 @@ Yii::setAlias('@categories-bg','/common/modules/order/images');
 Yii::setAlias('@profile-img','/common/modules/profile/images');
 
 return [
-    'adminEmail' => 'Nevse.kg@yandex.ru',
-    'supportEmail' => 'Nevse.kg@yandex.ru',
-    'senderEmail' => 'Nevse.kg@yandex.ru',
-    'senderName' => 'Example.com mailer',
+    'adminEmail' => 'Nevsekg@yandex.ru',
+    'supportEmail' => 'Nevsekg@yandex.ru',
+    'senderEmail' => 'Nevsekg@yandex.ruu',
+    'senderName' => 'Nevsekg@yandex.ru',
     'user.passwordResetTokenExpire' => 3600,
     'defaultTheme' => Yii::getAlias('@frontend_theme'),
     'defaultThemeLayout' => Yii::getAlias('@theme_layouts'),

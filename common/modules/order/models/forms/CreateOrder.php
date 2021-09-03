@@ -137,7 +137,7 @@ class CreateOrder extends Model
 
 	public function sendNotifications($id,$content,$time)
 	{	
-		$url = 'http://nevse.local/order/notificate';
+		$url = 'httpы://nevse.kg/order/notificate';
 
 		$data = array('content' => $content,'id' => $id,'time' => $time);
 
@@ -145,7 +145,7 @@ class CreateOrder extends Model
 
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_TIMEOUT_MS, 600);
+		curl_setopt($ch, CURLOPT_TIMEOUT_MS, 200);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 		curl_exec($ch);
 		curl_close($ch);

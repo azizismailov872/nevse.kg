@@ -112,13 +112,16 @@ class BackendOrderController extends Controller
                             'time' => $order->new_time($order->created_at)
                         ]
                     )
-                    ->setFrom('Nevse.kg@yandex.ru')
+                    ->setFrom('Nevsekg@yandex.ru')
                     ->setTo($user['email'])
                     ->setSubject('Заказ на Nevse.kg: '.$order->content)
                     ->send();
                 }
                 catch(\Exception $e)
-                {
+                {   
+                    echo '<pre>';
+                    var_dump($e);
+                    echo '</pre>';die;
                     Yii::$app->session->setFlash('error','Ошибка. Уведомления не были отправлены');
 
                     return $this->redirect(['/order/view/'.$id]);

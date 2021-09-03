@@ -41,8 +41,8 @@ return [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.yandex.ru',
-                'username' => 'Nevse.kg@yandex.ru',
-                'password' => 'kgnopikuidwyrkdu',
+                'username' => 'Nevsekg@yandex.ru',
+                'password' => 'cwrlmsoaolgyydnj',
                 'port' => '465',
                 'encryption' => 'ssl',
             ],
